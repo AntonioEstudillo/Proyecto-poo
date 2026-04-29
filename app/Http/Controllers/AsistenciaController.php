@@ -8,22 +8,19 @@ use App\Models\Cliente;
 
 class AsistenciaController extends Controller
 {
-    // LISTAR
     public function index()
     {
-        $asistencias = Asistencia::with('cliente')->get();
-        return view('asistencias.index', compact('asistencias'));
+        $fecha = $request->fecha ?? now()->toDateString();
+
+        $asistencias = Asistencia::with('cliente')
+            ->whereDate('fecha', $fecha)
+            ->orderBy('fecha', 'asc')
+            ->get();
+
+        return view('asistencias.index', compact('asistencias', 'fecha'));
     }
 
-    // FORMULARIO
-    public function create()
-    {
-        $clientes = Cliente::all();
-        return view('asistencias.create', compact('clientes'));
-    }
-
-    // GUARDAR
-    public function store(Request $request)
+    public function create(Request $request)
     {
         Asistencia::create([
             'cliente_id' => $request->cliente_id,
@@ -31,9 +28,24 @@ class AsistenciaController extends Controller
         ]);
 
         return redirect()->route('asistencias.index');
+        }
+
+    public function store(Request $request)
+    {
+        $existe = Asistencia::where('cliente_id', $request->cliente_id)
+        ->whereDate('fecha', now())
+        ->exists();
+
+    if (!$existe) {
+        Asistencia::create([
+            'cliente_id' => $request->cliente_id,
+            'fecha' => now()
+        ]);
     }
 
-    // ELIMINAR
+    return redirect()->back();
+    }
+
     public function destroy($id)
     {
         $asistencia = Asistencia::findOrFail($id);

@@ -9,7 +9,7 @@ class Asistencia extends Model
 
     protected $table = 'asistencias';
 
-    public function clientes()
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }

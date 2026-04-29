@@ -6,6 +6,10 @@ use App\Models\Cliente;
 use App\Models\Entrenador;
 use App\Models\Membresia;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Asistencia;
+
+use function Symfony\Component\Clock\now;
 
 class ClienteController extends Controller
 {
@@ -14,7 +18,19 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::with('membresia','entrenador')->get();
+
+        $hoy = Carbon::now()->toDateString();
+
+        $clientes = Cliente::with(['membresia', 'entrenador'])
+        ->get()
+        ->map(function ($cliente) use ($hoy) {
+
+            $cliente->asistencia_hoy = $cliente->asistencias()
+                ->whereDate('fecha', $hoy)
+                ->exists();
+
+            return $cliente;
+        });
 
         return view('clientes.index', compact('clientes'));
     }

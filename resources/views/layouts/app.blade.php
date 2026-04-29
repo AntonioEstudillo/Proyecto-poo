@@ -6,27 +6,27 @@
     <title>Gimnasio</title>
 
     <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Gym System</a>
+<nav class="bg-gray-900 py-4">
+    <div class="container mx-auto flex items-center justify-between px-4">
+        <a class="text-xl font-bold text-white" href="#">Gym System</a>
 
-            <div>
-                <a class="nav-link text-white" href="/clientes">Clientes</a>
-                <a class="nav-link text-white" href="/membresias">Membresías</a>
-                <a class="nav-link text-white" href="/entrenadores">Entrenadores</a>
-            </div>
+        <div class="flex flex-1 justify-around ml-10">
+            <a class="text-white hover:text-cyan-400 hover:bg-gray-800 px-4 py-2 rounded-lg transition-all duration-300 flex-1 text-center" href="/clientes">Clientes</a>
+            <a class="text-white hover:text-cyan-400 hover:bg-gray-800 px-4 py-2 rounded-lg transition-all duration-300 flex-1 text-center" href="/membresias">Membresías</a>
+            <a class="text-white hover:text-cyan-400 hover:bg-gray-800 px-4 py-2 rounded-lg transition-all duration-300 flex-1 text-center" href="/entrenadores">Entrenadores</a>
+            <a class="text-white hover:text-cyan-400 hover:bg-gray-800 px-4 py-2 rounded-lg transition-all duration-300 flex-1 text-center" href="/asistencias">Asistencias</a>
         </div>
-    </nav>
-
-    <!-- CONTENIDO -->
-    <div class="container mt-4">
-        @yield('content')
     </div>
+</nav>
+    <!-- CONTENIDO -->
+    <main class="container mx-auto mt-8 px-4">
+        @yield('content')
+    </main>
 
 </body>
 </html>

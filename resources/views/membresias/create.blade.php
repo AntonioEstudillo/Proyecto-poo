@@ -2,36 +2,38 @@
 
 @section('content')
 
-<form method="POST" action="{{ route('membresias.store') }}">
-    @csrf
-    <div class="mb-3">
-        <label class="form-label">Nombre</label>
-        <input type="text" name="nombre" value="{{ old('nombre') }}" class="form-control"><br>
-        @error('nombre') <small class="text-danger"> {{ $message }}</small> @enderror
-    </div>
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
+    <form method="POST" action="{{ route('membresias.store') }}">
+        @csrf
+        <div>
+            <x-form-label>Nombre</x-form-label>
+            <x-form-input type="text" name="nombre" value="{{ old('nombre') }}" />
+            @error('nombre') <small class="text-red-500"> {{ $message }}</small> @enderror
+        </div>
 
-    <div class="mb-3">
-        <label>Descripción</label>
-        <textarea name="descripcion" rows="5" cols="30" value="{{ old('descripcion') }}" class="form-control"></textarea>
-         @error('descripcion') <small class="text-danger"> {{ $message }}</small> @enderror
-    </div>
+        <div>
+            <x-form-label>Descripción</x-form-label>
+            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" name="descripcion" rows="5" cols="30" value="{{ old('descripcion') }}"></textarea>
+            @error('descripcion') <small class="text-red-500"> {{ $message }}</small> @enderror
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Duración</label>
-        <input type="text" name="duracion" value="{{ old('duracion') }}" class="form-control"><br>
-        @error('duracion') <small class="text-danger"> {{ $message }}</small> @enderror
-    </div>
+        <div>
+            <x-form-label class="form-label">Duración</x-form-label>
+            <x-form-input type="text" name="duracion" value="{{ old('duracion') }}" /><br>
+            @error('duracion') <small class="text-red-500"> {{ $message }}</small> @enderror
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Precio</label>
-        <input type="number" name="precio" value="{{ old('precio') }}" class="form-control"><br>
-        @error('precio') <small class="text-danger"> {{ $message }}</small> @enderror
-    </div>
+        <div>
+            <x-form-label>Precio</x-form-label>
+            <x-form-input type="number" name="precio" value="{{ old('precio') }}" /><br>
+            @error('precio') <small class="text-red-500"> {{ $message }}</small> @enderror
+        </div>
 
-    
-    <button type="submit" class="btn btn-success">Guardar</button>
-    <a href="/membresias" class="btn btn-secondary">Cancelar</a>
-
-</form>
+        <div class="py-2">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors">Guardar</button>
+            <a href="{{ route('membresias.index') }}" class="bg-red-500 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg shadow-md font-bold transition-color">Cancelar</a>
+        </div>
+    </form>
+</div>
 
 @endsection
