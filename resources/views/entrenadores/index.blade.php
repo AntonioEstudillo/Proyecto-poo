@@ -50,10 +50,17 @@
     </tbody>
 </table>
 
+</div>
+
 <div class="py-3">
     <a href="{{ route('entrenadores.create') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-all">
         Registar Entrenador
     </a>
 </div>
+
+<div class="mt-4">
+    {{ $entrenadores->links() }}
+</div>
+
 
 @endsection

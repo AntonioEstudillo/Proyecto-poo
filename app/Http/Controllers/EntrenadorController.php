@@ -12,7 +12,7 @@ class EntrenadorController extends Controller
      */
     public function index()
     {
-        $entrenadores = Entrenador::all();
+        $entrenadores = Entrenador::paginate(10);
         return view('entrenadores.index',compact('entrenadores'));
 
     }

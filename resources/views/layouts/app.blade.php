@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Gimnasio</title>
 
-    <!-- Bootstrap CDN -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!--CDN FONT AWESOME-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
         </div>
     </div>
 </nav>
-    <!-- CONTENIDO -->
+
     <main class="container mx-auto mt-8 px-4">
         @yield('content')
     </main>

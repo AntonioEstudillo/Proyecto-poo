@@ -4,7 +4,7 @@
 
 <h1 class="text-3xl font-bold text-gray-800 mb-6">Clientes</h1> 
 <div class="overflow-x-auto bg-white rounded-lg shadow">
-    <table class="w-full text-left border-collapse">
+    <table class="w-full text-center border-collapse">
         <thead class="bg-gray-900 text-white">
             <tr>
                 <x-table-th>Nombre</x-table-th>
@@ -26,7 +26,7 @@
                     <x-table-td>{{ $cliente->correo }}</x-table-td>
                     <x-table-td>{{ $cliente->membresia->nombre ?? 'Sin membresía activa' }}</x-table-td>
                     <x-table-td>{{ $cliente->entrenador->nombre ?? 'Sin entrenador' }}</x-table-td>
-                    <x-table-td>{{ $cliente->fecha_registro}}</x-table-td>
+                    <x-table-td>{{ $cliente->fecha_registro->format('d/m/y')}}</x-table-td>
 
                     <x-table-td>
                         @php $restantes = $cliente->diasRestantes(); @endphp
@@ -42,7 +42,7 @@
                         @else
                             <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-700 rounded-full">Vencido ({{ abs($restantes) }} d)</span>
                         @endif
-                        </x-table-td>
+                    </x-table-td>
 
                     <x-table-td>
                         @if($cliente->asistencia_hoy)
@@ -88,5 +88,8 @@
     </a>
 </div>
 
+<div class="mt-4">
+    {{ $clientes->links() }}
+</div>
 
 @endsection

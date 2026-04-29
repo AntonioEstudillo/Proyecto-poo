@@ -22,15 +22,10 @@ class ClienteController extends Controller
         $hoy = Carbon::now()->toDateString();
 
         $clientes = Cliente::with(['membresia', 'entrenador'])
-        ->get()
-        ->map(function ($cliente) use ($hoy) {
-
-            $cliente->asistencia_hoy = $cliente->asistencias()
-                ->whereDate('fecha', $hoy)
-                ->exists();
-
-            return $cliente;
-        });
+            ->withExists(['asistencias as asistencia_hoy' => function ($query) use ($hoy) {
+                $query->whereDate('fecha', $hoy);
+            }])
+            ->paginate(20);
 
         return view('clientes.index', compact('clientes'));
     }
@@ -44,7 +39,6 @@ class ClienteController extends Controller
         $entrenadores = Entrenador::all();
 
         return view('clientes.create', compact('membresias', 'entrenadores'));
-
     }
 
     /**
@@ -53,24 +47,26 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'nombre'=> 'required|string|max:255',
-            'fecha_registro'=> 'required|date',
-            'correo'=> 'required|email|unique:clientes,correo', 
-            'telefono'=> 'required|digits:10', 
-            'entrenador_id' => 'nullable|exists:entrenadores,id'
-        ], 
-        
-        [   
-            
-            'nombre.required'=> 'Este campo es necesario',
-            'fecha_registro.required'=> 'Este campo es necesario',
-            'correo.required'=> 'Este campo es necesario',
-            'telefono.required' => 'Este campo es necesario',
+        $request->validate(
+            [
+                'nombre' => 'required|string|max:255',
+                'fecha_registro' => 'required|date',
+                'correo' => 'required|email|unique:clientes,correo',
+                'telefono' => 'required|digits:10',
+                'entrenador_id' => 'nullable|exists:entrenadores,id'
+            ],
 
-            'correo.unique' => 'El correo electrónico ya se encuentra en nuestros registros.',
-            'telefono.digits' => 'El teléfono debe tener exactamente 10 dígitos.'
-        ]);
+            [
+
+                'nombre.required' => 'Este campo es necesario',
+                'fecha_registro.required' => 'Este campo es necesario',
+                'correo.required' => 'Este campo es necesario',
+                'telefono.required' => 'Este campo es necesario',
+
+                'correo.unique' => 'El correo electrónico ya se encuentra en nuestros registros.',
+                'telefono.digits' => 'El teléfono debe tener exactamente 10 dígitos.'
+            ]
+        );
 
         Cliente::create($request->all());
 
@@ -88,35 +84,36 @@ class ClienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    
+
     public function edit(Cliente $cliente)
     {
-        $membresias = Membresia::all(); 
+        $membresias = Membresia::all();
         $entrenadores = Entrenador::all();
         return view('clientes.edit', compact('cliente', 'membresias', 'entrenadores'));
-        
     }
 
-    
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Cliente $cliente)
     {
-       $request->validate([
-            'nombre'=> 'required|string|max:255',
-            'fecha_registro'=> 'required|date',
-            'correo'=> 'required|email|',
-            'entrenador_id' => 'nullable|exists:entrenadores,id'
-        ], 
-        
-        [   
-            
-            'nombre.required'=> 'Este campo es necesario',
-            'fecha_registro.required'=> 'Este campo es necesario',
-            'correo.required'=> 'Este campo es necesario',
-        ]);
+        $request->validate(
+            [
+                'nombre' => 'required|string|max:255',
+                'fecha_registro' => 'required|date',
+                'correo' => 'required|email|',
+                'entrenador_id' => 'nullable|exists:entrenadores,id'
+            ],
+
+            [
+
+                'nombre.required' => 'Este campo es necesario',
+                'fecha_registro.required' => 'Este campo es necesario',
+                'correo.required' => 'Este campo es necesario',
+            ]
+        );
 
 
         $cliente->update($request->all());
@@ -129,7 +126,7 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        $cliente->delete(); 
+        $cliente->delete();
         return redirect()->route('clientes.index');
     }
 }

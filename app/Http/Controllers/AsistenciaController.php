@@ -5,30 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Asistencia;
 use App\Models\Cliente;
+use Illuminate\Support\Carbon;
 
 class AsistenciaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $fecha = $request->fecha ?? now()->toDateString();
+        $fecha = $request->input('fecha', Carbon::now()->toDateString());
 
         $asistencias = Asistencia::with('cliente')
             ->whereDate('fecha', $fecha)
             ->orderBy('fecha', 'asc')
-            ->get();
+            ->paginate(20)
+            ->withQueryString();
 
         return view('asistencias.index', compact('asistencias', 'fecha'));
     }
 
     public function create(Request $request)
     {
-        Asistencia::create([
-            'cliente_id' => $request->cliente_id,
-            'fecha' => now()
-        ]);
-
-        return redirect()->route('asistencias.index');
-        }
+        //
+    }
 
     public function store(Request $request)
     {
