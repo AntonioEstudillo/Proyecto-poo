@@ -67,10 +67,10 @@
                         </a>
                     </x-table-td>
                     <x-table-td>
-                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="delete-form inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-white bg-red-500 hover:bg-red-700 px-3 py-1 rounded shadow-sm text-sm transition-colors" onclick="return confirm('¿Estás seguro de eliminar a este cliente?')">
+                            <button type="submit" class="btn-delete text-white bg-red-500 hover:bg-red-700 px-3 py-1 rounded shadow-sm text-sm transition-colors">
                                 Eliminar
                             </button>
                         </form>

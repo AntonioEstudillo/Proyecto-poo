@@ -11,7 +11,7 @@ class Asistencia extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Cliente::class)->withTrashed();
     }
 
     protected $fillable = [

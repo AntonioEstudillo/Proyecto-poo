@@ -24,7 +24,7 @@
             <tr>
                 <x-table-td>{{ $entrenador->nombre }}</x-table-td>
                 <x-table-td>{{ $entrenador->edad }}</x-table-td>
-                <x-table-td>{{ $entrenador->especialidad }}</x-table-td>
+                <x-table-td>{{ $entrenador->especialidad }}</x-table-td>    
                 <x-table-td>{{ $entrenador->telefono }}</x-table-td>
                 <x-table-td>{{ $entrenador->correo }}</x-table-td>
 
@@ -35,10 +35,10 @@
                 </x-table-td>
 
                 <x-table-td>
-                    <form action="{{ route('entrenadores.destroy', $entrenador->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('entrenadores.destroy', $entrenador->id) }}" method="POST" class="delete-form inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-white bg-red-500 hover:bg-red-700 px-3 py-1 rounded shadow-sm text-sm transition-colors" onclick="return confirm('¿Estás seguro de eliminar a este cliente?')">
+                        <button type="submit" class="btn-delete text-white bg-red-500 hover:bg-red-700 px-3 py-1 rounded shadow-sm text-sm transition-colors">
                             Eliminar
                         </button>
                     </form>

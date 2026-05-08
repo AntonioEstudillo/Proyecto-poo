@@ -8,12 +8,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!--CDN FONT AWESOME-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!--CDN SWEETALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <!-- NAVBAR -->
 <nav class="bg-gray-900 py-4">
     <div class="container mx-auto flex items-center justify-between px-4">
-        <a class="text-xl font-bold text-white" href="#">Gym System</a>
+        <a class="text-xl font-bold text-white" href="/">Gym System</a>
 
         <div class="flex flex-1 justify-around ml-10">
             <a class="text-white hover:text-cyan-400 hover:bg-gray-800 px-4 py-2 rounded-lg transition-all duration-300 flex-1 text-center" href="/clientes">Clientes</a>
@@ -25,8 +27,22 @@
 </nav>
 
     <main class="container mx-auto mt-8 px-4">
+
         @yield('content')
     </main>
+
+    @if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡Operación Exitosa!',
+            text: "{{ session('success') }}",
+            timer: 3000,
+            showConfirmButton: false,
+            timerProgressBar: true,
+        });
+    </script>
+@endif
 
 </body>
 </html>

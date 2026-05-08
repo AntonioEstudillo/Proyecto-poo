@@ -55,7 +55,7 @@ class EntrenadorController extends Controller
 
         Entrenador::create($request->all());
 
-        return redirect()->route('entrenadores.index');
+        return redirect()->route('entrenadores.index')->with('success', 'Entrenador registrado correctamente');
     }
 
     /**

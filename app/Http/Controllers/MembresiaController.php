@@ -53,7 +53,7 @@ class MembresiaController extends Controller
         ]);
 
         $membresia = Membresia::create($request->all());
-        return redirect()->route('membresias.index');
+        return redirect()->route('membresias.index')->with('success', 'Membresía registrada correctamente');
     }
 
     /**
@@ -102,7 +102,7 @@ class MembresiaController extends Controller
 
         $membresia->update($request->all());
 
-        return redirect()->route('membresias.index')->with('success', 'Cliente actualizado correctamente');;
+        return redirect()->route('membresias.index')->with('success', 'Membresía actualizada correctamente');
     }
 
     /**
