@@ -13,7 +13,7 @@ class AsistenciaController extends Controller
     {
         $fecha = $request->input('fecha', Carbon::now()->toDateString());
 
-        $asistencias = Asistencia::with('cliente')
+        $asistencias = Asistencia::with('asistible')
             ->whereDate('fecha', $fecha)
             ->orderBy('fecha', 'asc')
             ->paginate(20)
@@ -27,21 +27,32 @@ class AsistenciaController extends Controller
         //
     }
 
-    public function store(Request $request)
-    {
-        $existe = Asistencia::where('cliente_id', $request->cliente_id)
+   public function store(Request $request)
+{
+    $tipo = $request->input('tipo', ''); 
+    $id = $request->sujeto_id; 
+
+    if ($tipo === 'entrenador') {
+        $modelClass = \App\Models\Entrenador::class;
+    } else {
+        $modelClass = \App\Models\Cliente::class;
+    }
+
+    $existe = Asistencia::where('asistible_id', $id)
+        ->where('asistible_type', $modelClass)
         ->whereDate('fecha', now())
         ->exists();
 
     if (!$existe) {
-        Asistencia::create([
-            'cliente_id' => $request->cliente_id,
+        $sujeto = $modelClass::findOrFail($id);
+        
+        $sujeto->asistencias()->create([
             'fecha' => now()
         ]);
     }
 
     return redirect()->back();
-    }
+}
 
     public function destroy($id)
     {

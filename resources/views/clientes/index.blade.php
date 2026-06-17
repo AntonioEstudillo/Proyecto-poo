@@ -52,7 +52,10 @@
                         @else
                             <form method="POST" action="{{ route('asistencias.store') }}">
                                 @csrf
-                                <input type="hidden" name="cliente_id" value="{{ $cliente->id }}">
+                                <input type="hidden" name="sujeto_id" value="{{ $cliente->id }}">
+
+                                <input type="hidden" name="tipo" value="cliente">
+
 
                                 <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded shadow-sm text-sm transition-colors">
                                     Registrar asistencia

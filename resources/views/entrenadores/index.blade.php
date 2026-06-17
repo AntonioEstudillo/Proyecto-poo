@@ -15,6 +15,7 @@
             <x-table-th>Correo</x-table-th>
             <x-table-th></x-table-th>
             <x-table-th></x-table-th>
+            <x-table-th></x-table-th>
             
         </tr>
     </thead>
@@ -27,6 +28,25 @@
                 <x-table-td>{{ $entrenador->especialidad }}</x-table-td>    
                 <x-table-td>{{ $entrenador->telefono }}</x-table-td>
                 <x-table-td>{{ $entrenador->correo }}</x-table-td>
+
+                <x-table-td>
+        @if($entrenador->asistencia_hoy)
+            <span class="text-gray-400 text-sm font-medium italic">
+                Ya registrado
+            </span>
+        @else
+            <form method="POST" action="{{ route('asistencias.store') }}">
+                @csrf
+                <input type="hidden" name="sujeto_id" value="{{ $entrenador->id }}">
+                
+                <input type="hidden" name="tipo" value="entrenador">
+
+                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded shadow-sm text-sm transition-colors">
+                    Registrar asistencia
+                </button>
+            </form>
+        @endif
+    </x-table-td>
 
                 <x-table-td>
                     <a href="{{ route('entrenadores.edit', $entrenador->id) }}" class="bg-amber-600 hover:bg-red-700 text-white px-3 py-1 rounded shadow-sm text-sm transition-color">

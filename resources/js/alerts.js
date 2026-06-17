@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: "Esta acción no se puede deshacer.",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6', // Color primario
-                cancelButtonColor: '#d33',    // Color de peligro
+                confirmButtonColor: '#3085d6', 
+                cancelButtonColor: '#d33',    
                 confirmButtonText: 'Sí, eliminar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit(); // Solo envía el formulario si el usuario confirma
+                    form.submit(); 
                 }
             });
         });

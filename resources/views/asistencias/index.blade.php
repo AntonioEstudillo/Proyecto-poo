@@ -21,15 +21,32 @@
 <table class="w-full text-left border-collapse">
     <thead class="bg-gray-900 text-white">
         <tr>
-            <x-table-th>Cliente</x-table-th>
-            <x-table-th>Hora</x-table-th>
+            <x-table-th>Nombre</x-table-th>
+            <x-table-th>Tipo</x-table-th> <x-table-th>Hora</x-table-th>
         </tr>
     </thead>
 
     <tbody>
         @foreach($asistencias as $asistencia)
-        <tr>
-            <x-table-td>{{ $asistencia->cliente->nombre }}</x-table-td>
+        <tr class="border-b border-gray-200 hover:bg-gray-50">
+            <x-table-td>{{ $asistencia->asistible->nombre }}</x-table-td>
+            
+            <x-table-td>
+                @if($asistencia->asistible instanceof \App\Models\Cliente)
+                    <span class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
+                        Cliente
+                    </span>
+                @elseif($asistencia->asistible instanceof \App\Models\Entrenador)
+                    <span class="px-2 py-1 text-xs font-semibold bg-purple-100 text-purple-700 rounded-full">
+                        Entrenador
+                    </span>
+                @else
+                    <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-700 rounded-full">
+                        Otro
+                    </span>
+                @endif
+            </x-table-td>
+
             <x-table-td>{{ \Carbon\Carbon::parse($asistencia->fecha)->format('H:i') }}</x-table-td>
         </tr>
         @endforeach

@@ -17,6 +17,11 @@ class Entrenador extends Model
         return $this->hasMany(Cliente::class);
     }
 
+    public function asistencias()
+    {
+        return $this->morphMany(Asistencia::class, 'asistible');
+    }
+
     protected $fillable = [
         'nombre',
         'correo',

@@ -36,7 +36,7 @@ Route::put('/entrenadores/{entrenador}',[EntrenadorController::class, 'update'])
 Route::delete('/entrenadores/{entrenador}',[EntrenadorController::class, 'destroy'])->name('entrenadores.destroy');
 
 Route::get('/asistencias',[AsistenciaController::class, 'index'])->name('asistencias.index');
-Route::post('/assitencias/store',[AsistenciaController::class,'store'])->name('asistencias.store');
+Route::post('/asistencias/store',[AsistenciaController::class,'store'])->name('asistencias.store');
 
 
 

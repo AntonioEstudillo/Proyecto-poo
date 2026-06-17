@@ -9,9 +9,9 @@ class Asistencia extends Model
 
     protected $table = 'asistencias';
 
-    public function cliente()
+    public function asistible()
     {
-        return $this->belongsTo(Cliente::class)->withTrashed();
+        return $this->morphTo()->withTrashed();
     }
 
     protected $fillable = [

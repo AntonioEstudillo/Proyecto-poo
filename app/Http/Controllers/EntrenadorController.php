@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Entrenador;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Asistencia;
 
 class EntrenadorController extends Controller
 {
@@ -12,7 +14,13 @@ class EntrenadorController extends Controller
      */
     public function index()
     {
-        $entrenadores = Entrenador::paginate(10);
+
+        $hoy = Carbon::now()->toDateString();
+
+        $entrenadores = Entrenador::withExists(['asistencias as asistencia_hoy' => function ($query) use ($hoy) {
+                $query->whereDate('fecha', $hoy);
+            }])
+            ->paginate(10);
         return view('entrenadores.index',compact('entrenadores'));
 
     }

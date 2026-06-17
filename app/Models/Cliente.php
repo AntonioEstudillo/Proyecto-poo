@@ -25,8 +25,9 @@ class Cliente extends Model
         return $this->belongsTo(Entrenador::class);
     }
 
-    public function asistencias(){
-        return $this->hasMany(Asistencia::class);
+    public function asistencias()
+    {
+        return $this->morphMany(Asistencia::class, 'asistible');
     }
 
     protected $fillable = [
